@@ -1,6 +1,8 @@
 from django.shortcuts import render
 
-from .models import Feedback
+from .models import Feedback, Employees
+
+from .forms import EmployeeForm
 
 import json
 
@@ -13,10 +15,6 @@ def index(request):
 
 def another(request):
     return render(request, 'myapp/another.html')
-
-
-def why(request):
-    return render(request, 'myapp/why.html')
 
 
 def donate(request):
@@ -39,3 +37,33 @@ def scammed(request):
 
     context = {'joker': joke}
     return render(request, 'myapp/joke.html', context)
+
+
+def why(request):
+    context = {'employee_list': Employees.objects.all()}
+    return render(request, "myapp/why.html", context)
+
+
+def create(request, id=0):
+    if request.method == "GET":
+        if id == 0:
+            form = EmployeeForm()
+        else:
+            employee = Employees.objects.get(pk=id)
+            form = EmployeeForm(instance=employee)
+        return render(request, "myapp/create.html", {'form': form})
+    else:
+        if id == 0:
+            form = EmployeeForm(request.POST)
+        else:
+            employee = Employees.objects.get(pk=id)
+            form = EmployeeForm(request.POST, instance=employee)
+        if form.is_valid():
+            form.save()
+        return why(request)
+
+
+def delete(request, id):
+    employee = Employees.objects.get(pk=id)
+    employee.delete()
+    return why(request)

@@ -1,0 +1,43 @@
+{% extends 'myapp/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container">
+    <div class="col-md-10 offset-md-1 mt-5" style="margin-top: 40px">
+        <div class="jumbotron">
+            <h1 class="display-4">Employee CRUD</h1>
+            <p class="lead">Create, Read, Update and Delete Employee records:-</p>
+            <hr class="my-4">
+            <form action="" method="post" autocomplete="off">
+                {% csrf_token %}
+                {{form.name|as_crispy_field}}
+                <div class="row">
+                    <div class="col-md-8">
+                        {{form.email|as_crispy_field}}
+                    </div>
+                    <div class="col-md-4">
+                        {{form.age|as_crispy_field}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <button type="submit" class="btn btn-success btn-block btn-lg"><i class="fas fa-database"></i>
+                            Submit
+                        </button>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="{% url 'why' %}" class="btn btn-secondary btn-block btn-lg">
+                            <i class="fas fa-stream"></i> Back to list
+                        </a>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
