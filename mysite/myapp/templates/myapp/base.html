@@ -15,7 +15,8 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #FF8000">
     <a class="navbar-brand" href="{% url 'home' %}">
-        <img src="{% static 'myapp/images/home-logo.png' %}" width="70" height="70" class="d-inline-block align-top" alt="Home">
+        <img src="{% static 'myapp/images/home-logo.png' %}" width="70" height="70" class="d-inline-block align-top"
+             alt="Home">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,18 +35,24 @@
                 <a class="nav-link" href="{% url 'donate' %}">Donate<span class="sr-only">(current)</span></a>
             </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
+<!--        Right side of the navbar-->
+        <div class="navbar-nav">
+            {% if user.is_authenticated %}
+            <a class="nav-item active nav-link" href="{% url 'profile' %}">{{ user.username }}</a>
+            <a class="nav-item active nav-link" href="{% url 'logout' %}">Logout</a>
+            {% else %}
+            <a class="nav-item active nav-link" href="{% url 'login' %}">Login</a>
+            <a class="nav-item active nav-link" href="{% url 'register' %}">Register</a>
+            {% endif %}
+        </div>
     </div>
 </nav>
 {% if messages %}
-    {% for message in messages %}
-        <div class="alert alert-{{ message.tags }}">
-            {{ message }}
-        </div>
-    {% endfor %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }}">
+    {{ message }}
+</div>
+{% endfor %}
 {% endif %}
 
 {% block content %}

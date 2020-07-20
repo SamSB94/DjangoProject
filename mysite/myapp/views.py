@@ -4,6 +4,8 @@ from .models import Feedback, Employees
 
 from .forms import EmployeeForm
 
+from django.contrib.auth.decorators import login_required
+
 import json
 
 import requests
@@ -39,11 +41,13 @@ def scammed(request):
     return render(request, 'myapp/joke.html', context)
 
 
+@login_required
 def why(request):
     context = {'employee_list': Employees.objects.all()}
     return render(request, "myapp/why.html", context)
 
 
+@login_required
 def create(request, id=0):
     if request.method == "GET":
         if id == 0:
@@ -63,6 +67,7 @@ def create(request, id=0):
         return why(request)
 
 
+@login_required
 def delete(request, id):
     employee = Employees.objects.get(pk=id)
     employee.delete()

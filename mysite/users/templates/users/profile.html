@@ -1,0 +1,12 @@
+{% extends 'myapp/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+    <div class="col-md-6 offset-md-3" style="margin-top: 40px">
+        <div class="jumbotron">
+            <h1>{{ user.username }}'s Profile:-</h1>
+        </div>
+    </div>
+</div>
+{% endblock %}
