@@ -7,11 +7,19 @@
     <div class="card-body">
         <h1 class="card-title">{{ user.username }}</h1>
         <p class="card-text">{{ user.email }}</p>
-        <p class="card-text">{{ user.first_name }}</p>
-        <p class="card-text">{{ user.last_name }}</p>
-        <div class="col text-center">
-            <a class="btn btn-primary" href="mailto:{{ user.email }}">Contact</a>
-        </div>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                {{ u_form|crispy }}
+                {{ p_form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-success" type="submit">
+                    <i class="fa fa-upload" aria-hidden="true"></i>
+                    Update
+                </button>
+            </div>
+        </form>
     </div>
 </div>
 {% endblock %}
